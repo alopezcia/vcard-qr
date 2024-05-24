@@ -14,7 +14,7 @@ async function auth( username, password ) {
     userSearchBase: process.env.LDAP_USER_BASE_DN,
     usernameAttribute: process.env.LDAP_USERNAME_ATTRIBUTE,
     username: username,
-    attributes: ['dn', 'givenName', 'sn', 'cn', 'mail' ]
+    attributes: ['dn', 'givenName', 'sn', 'sAMAccountName', 'mail' ]
     
     // starttls: false
   }
@@ -28,9 +28,15 @@ const login  = async (req = request, res = response ) => {
     const solicitud = req.body;
     try{
 // console.log(solicitud);
-      const user = await auth(solicitud.username, solicitud.password );
+      // const user = await auth(solicitud.username, solicitud.password );
+      const user = { 
+        givenName: 'Adolfo',
+        sn: 'López Escribano',
+        sAMAccountName: 'alopeze',
+        mail: 'adolfo.lopez@aguasdealicante.es'
+      }; 
 console.log(  JSON.stringify(user) )
-      res.render('main', { cn: user.cn, dn: user.dn, uuid: solicitud.uuid });
+      res.render('main', user );
     } catch( e ) {
 // console.error( e );
         res.status(401).send( { status: 401, errors: [ {msg: e.lde_message} ] } );

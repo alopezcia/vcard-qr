@@ -26,6 +26,10 @@ const submitForm  = (event) => {
           //       }
           //   });
           document.querySelector('body').innerHTML = data['html'];
+          // A.L.E. 24-05-2024 - Ajustar aqui los eventos de la pagina cargada, de otra forma no encuentra los métodos
+          document.getElementById('photo-output').addEventListener("dragenter", dragenter );
+          document.getElementById('photo-output').addEventListener("dragover", dragover );
+          document.getElementById('photo-output').addEventListener("drop", dodrop );
         }
     }).catch( (err) => {
       // Swal.fire({icon: 'error', title: 'Oops...', text: `El campo ${element} es obligatrio`, footer: 'Cumplimentar'});
@@ -56,6 +60,36 @@ async function postData(url = "", data = {}) {
 // console.log( JSON.stringify(resp) );      
       return resp; 
     }
+}
+function dragenter(event){
+  event.stopPropagation(); 
+  event.preventDefault();
+}
+
+function dragover(event){
+  event.stopPropagation(); 
+  event.preventDefault();
+}
+
+function dodrop(event){
+  event.stopPropagation(); 
+  const items = event.dataTransfer.items;
+  if( !items || items.length !== 1 ) return;
+  const blob = items[0].getAsFile();
+  const URLObj=window.URL || window.webkitURL;
+  const source = URLObj.createObjectURL(blob);
+
+	const ctx = document.getElementById('photo-output').getContext("2d");  
+  const imagen = new Image();
+  imagen.onload = () => {
+    const canvas = document.getElementById('photo-output');
+    canvas.width = imagen.width;
+    canvas.height = imagen.height;
+    ctx.clearRect(0, 0 , canvas.width, canvas.height);
+    ctx.drawImage(imagen, 0, 0);
+  }
+  imagen.src = source;
+  event.preventDefault();
 }
 
 
