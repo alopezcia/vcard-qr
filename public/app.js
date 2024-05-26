@@ -30,12 +30,17 @@ const submitForm  = (event) => {
           document.getElementById('photo-output').addEventListener("dragenter", dragenter );
           document.getElementById('photo-output').addEventListener("dragover", dragover );
           document.getElementById('photo-output').addEventListener("drop", dodrop );
+          window.addEventListener('beforeunload', (evt)=>{ 
+            evt.returnValue = 'Al recargar la pagina se pierden los valores, ¿seguro?';
+          });
         }
     }).catch( (err) => {
       // Swal.fire({icon: 'error', title: 'Oops...', text: `El campo ${element} es obligatrio`, footer: 'Cumplimentar'});
       console.error( err );
     });
 }
+
+
 
 async function postData(url = "", data = {}) {
     // Default options are marked with *

@@ -1,14 +1,27 @@
 <body class="bg-light">
+
     <div class="container">
-      <div class="row">
-        <div class="col-md-4 order-md-2">
-          <div id="filler" style="min-height: 40px;">FOTO (copia y pega)</div>
-          <canvas style="border:1px solid grey;" id="photo-output" width="200" height="200"></canvas>
+      <form class="needs-validation" novalidate>
+        <div class="row">
+          <div class="col-md-4 order-md-2">
+            <div style="min-height: 40px;">FOTO (copia y pega)</div>
+            <canvas style="border:1px solid grey;" id="photo-output" width="200" height="200"></canvas>
+          </div>
+
         </div>
-        
-        <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Datos en la VCARD</h4>
-          <form class="needs-validation" novalidate>
+        <div class="row">
+          <div class="col-md-4 order-md-2">
+            <div style="min-height: 40px;">QR</div>
+            <canvas style="border:1px solid grey;" id="qr-output" width="200" height="200"></canvas>
+          </div>
+
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Conseguir QR</button>
+      </form>
+      <div class="row">
+ 
+          <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Datos en la VCARD</h4>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Nombre</label>
@@ -48,7 +61,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="address">Address</label>
+              <label for="address">Dirección</label>
               <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
               <div class="invalid-feedback">
                 Please enter your shipping address.
@@ -56,13 +69,13 @@
             </div>
 
             <div class="mb-3">
-              <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+              <label for="address2">Segunda dirección<span class="text-muted">(Optional)</span></label>
               <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
             </div>
 
             <div class="row">
               <div class="col-md-5 mb-3">
-                <label for="country">Country</label>
+                <label for="country">Pais</label>
                 <select class="custom-select d-block w-100" id="country" required>
                   <option value="">Choose...</option>
                   <option>United States</option>
@@ -72,7 +85,7 @@
                 </div>
               </div>
               <div class="col-md-4 mb-3">
-                <label for="state">State</label>
+                <label for="state">Comunidad</label>
                 <select class="custom-select d-block w-100" id="state" required>
                   <option value="">Choose...</option>
                   <option>California</option>
@@ -90,21 +103,17 @@
               </div>
             </div>
 
-            <hr class="mb-4">
+          </div>
+      </div>
 
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="same-address">
-              <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="save-info">
-              <label class="custom-control-label" for="save-info">Save this information for next time</label>
-            </div>
-            
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Conseguir QR</button>
-          </form>
+      <div class="row">
+        <div class="col-md-4 order-md-2">
+          <div style="min-height: 40px;">QR</div>
+          <canvas style="border:1px solid grey;" id="qr-output" width="200" height="200"></canvas>
         </div>
       </div>
+
+      </form>
 
       <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; 2024 AMAEM</p>
