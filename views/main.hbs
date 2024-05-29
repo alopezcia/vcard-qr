@@ -1,7 +1,7 @@
 <body class="bg-light">
 
     <div class="container">
-      <form class="needs-validation" novalidate>
+      <form class="needs-validation" id="qr-form" novalidate>
         
         <div class="row">
           <div class="col-md-4 order-md-2">
@@ -13,14 +13,14 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Nombre</label>
-                <input type="text" class="form-control" id="firstName" value="{{givenName}}" required>
+                <input type="text" class="form-control" id="firstName" name="nombre" value="{{givenName}}" required>
                 <div class="invalid-feedback">
                   El Nombre es requerido.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Apellidos</label>
-                <input type="text" class="form-control" id="lastName" value="{{sn}}" required>
+                <input type="text" class="form-control" id="lastName" name="apellidos" value="{{sn}}" required>
                 <div class="invalid-feedback">
                   Valor requerido.
                 </div>
@@ -33,7 +33,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">@</span>
                   </div>
-                  <input type="text" class="form-control" id="username" value="{{sAMAccountName}}" required>
+                  <input type="text" class="form-control" id="username" name="username" value="{{sAMAccountName}}" required>
                   <div class="invalid-feedback" style="width: 100%;">
                     El nombre de usuario es requerido.
                   </div>
@@ -42,7 +42,7 @@
 
               <div class="col-md-6 mb-3">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" value="{{mail}}">
+                <input type="email" class="form-control" id="email" name="mail" value="{{mail}}">
                 <div class="invalid-feedback">
                   Introduce un email valido.
                 </div>
@@ -52,16 +52,16 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="worktel">Teléfono del trabajo</label>
-                <input type="text" class="form-control" id="worktel" value="{{worktel}}" required>
+                <input type="text" class="form-control" id="worktel" name="worktel" value="{{telephoneNumber}}" required>
                 <div class="invalid-feedback">
                   El teléfono del trabajo es requerido.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="hometel">Teléfono de casa</label>
-                <input type="text" class="form-control" id="hometel" value="{{hometel}}" required>
+                <input type="text" class="form-control" id="hometel" name="hometel" value="{{hometel}}" required>
                 <div class="invalid-feedback">
-                  El teéfono de casa es requerido.
+                  El teléfono de casa es requerido.
                 </div>
               </div>
             </div>
@@ -70,14 +70,23 @@
         
         <div class="row">
           <div class="col-md-4 order-md-2">
-            <div style="min-height: 40px;">QR</div>
+            <div style="min-height: 80px;">QR</div>
             <canvas style="border:1px solid grey;" id="qr-output" width="200" height="200"></canvas>
           </div>
           <div class="col-md-8 order-md-1">
             <div class="row">
               <div class="col-md-12">
+                <label for="title">Titulo</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{title}}" required>
+                <div class="invalid-feedback">
+                  El titulo es requerido.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
                 <label for="workdir">Dirección del Trabajo</label>
-                <textarea class="form-control" id="workdir" value="{{workdir}}" required rows="3"></textarea>
+                <textarea class="form-control" id="workdir" name="workdir" required rows="3">{{company}}&#13;&#10;{{streetAddress}}&#13;&#10;{{postalCode}}</textarea>
                 <div class="invalid-feedback">
                   La dirección del trabajo es requerida.
                 </div>
@@ -86,7 +95,7 @@
             <div class="row">
               <div class="col-md-12">
                 <label for="homedir">Dirección de Casa</label>
-                <textarea class="form-control" id="homedir" value="{{homedir}}" required rows="3"></textarea>
+                <textarea class="form-control" id="homedir" value="{{homedir}}" name="homedir" required rows="2"></textarea>
                 <div class="invalid-feedback">
                   La dirección de casa es requerida.
                 </div>

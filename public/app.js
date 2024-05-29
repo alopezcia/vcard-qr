@@ -30,6 +30,7 @@ const submitForm  = (event) => {
           document.getElementById('photo-output').addEventListener("dragenter", dragenter );
           document.getElementById('photo-output').addEventListener("dragover", dragover );
           document.getElementById('photo-output').addEventListener("drop", dodrop );
+          document.getElementById('qr-form').addEventListener("submit", submitQrForm );
           window.addEventListener('beforeunload', (evt)=>{ 
             evt.returnValue = 'Al recargar la pagina se pierden los valores, ¿seguro?';
           });
@@ -40,6 +41,56 @@ const submitForm  = (event) => {
     });
 }
 
+const submitQrForm = (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const formData = new FormData( event.target );
+  let obj = {}
+  for( let key of formData.keys() ) {
+    obj[key]=formData.get(key);
+  }
+  obj['uuid']=localStorage.getItem("uuid");
+
+// console.log( JSON.stringify(obj) );
+
+  // Obtener el canvas 
+  const img = document.getElementById('photo-output').toDataURL("image/png");
+  const vcard = 'BEGIN:VCARD \n'+
+                'VERSION:4.0 \n'+
+                `N:${obj.apellidos};${obj.nombre};\n` +
+                `FN:${obj.nombre} ${obj.apellidos}\n`+
+                'ORG:Aguas Municipalizadas de Alicante, E.M.\n'+
+                `TITLE:${obj.title}\n`+
+//                `PHOTO;MEDIATYPE=${img}\n`+     413 Payload Too Large
+                `TEL;TYPE=work,voice;VALUE=uri:tel:${obj.worktel}\n`+
+                `TEL;TYPE=home,voice;VALUE=uri:tel:${obj.hometel}\n`+
+                `ADDR;TYPE=work;LABEL:${obj.workdir}\n`+
+                `ADDR;TYPE=home;LABEL:${obj.homedir}\n`+
+                `EMAIL:${obj.mail}\n`+
+                'REV:20080424T195243Z\n'+
+                'END:VCARD\n';
+  obj['vcard']=vcard;
+  postData('/api/qr', obj).then((data) => {
+//    console.log(JSON.stringify(data));
+	  const ctx = document.getElementById('qr-output').getContext("2d");  
+    const imagen = new Image();
+    imagen.onload = () => {
+      const canvas = document.getElementById('qr-output');
+      canvas.width = imagen.width;
+      canvas.height = imagen.height;
+      ctx.clearRect(0, 0 , canvas.width, canvas.height);
+      ctx.drawImage(imagen, 0, 0);
+    }
+    imagen.src = data.message;
+
+  }).catch( (err) => {
+    // Swal.fire({icon: 'error', title: 'Oops...', text: `El campo ${element} es obligatrio`, footer: 'Cumplimentar'});
+    console.error( err );
+  });
+
+  
+} 
 
 
 async function postData(url = "", data = {}) {
@@ -66,6 +117,7 @@ async function postData(url = "", data = {}) {
       return resp; 
     }
 }
+
 function dragenter(event){
   event.stopPropagation(); 
   event.preventDefault();

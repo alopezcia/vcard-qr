@@ -10,12 +10,12 @@ class Server {
 
     constructor() {
         this.app  = express();
-        this.port = 8080;  
+        this.port = process.env.HTTP_PORT;  
         
         this.serverHttp = http.createServer(this.app);
 
         this.paths = {
-            qr:         '/api/get-qr',
+            qr:         '/api/qr',
             login:      '/api/login',
         }
 
@@ -46,8 +46,12 @@ class Server {
     
 
     routes() {
-        console.log( 'Aplicando rutas');
+console.log( 'Aplicando rutas');
+console.log( `   post en ${this.paths.login}`);
+console.log( `   post en ${this.paths.qr}`);
+
         this.app.use( this.paths.login, require('../routes/login'))
+        this.app.use( this.paths.qr, require('../routes/qr'))
     }
 
     listen() {
